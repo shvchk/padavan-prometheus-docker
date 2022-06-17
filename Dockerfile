@@ -1,20 +1,64 @@
-FROM debian:10-slim
+FROM ubuntu:jammy
 
-ENV APP_PATH="/opt/prometheus" \
-    APP_LAUNCHER_NAME="start.sh" \
-    APP_URL="http://prometheus.freize.net/script/start-99.sh" \
-    LANG="en_US.UTF-8" \
-    LC_ALL="en_US.UTF-8"
+ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN apt update && \
     apt upgrade -y && \
-    apt install -y cmake cpio kmod locales netcat sudo wget && \
-    sed -Ei '/(en_US|ru_RU).UTF-8/s/^# //g' /etc/locale.gen && \
-    locale-gen && \
-    mkdir "${APP_PATH}" && \
-    wget -O "${APP_PATH}/${APP_LAUNCHER_NAME}" "${APP_URL}" && \
-    chmod +x "${APP_PATH}/${APP_LAUNCHER_NAME}"
+    apt install -y \
+    autoconf \
+    automake \
+    autopoint \
+    bison \
+    build-essential \
+    cmake \
+    cpio \
+    curl \
+    doxygen \
+    fakeroot \
+    flex \
+    gawk \
+    gettext \
+    git \
+    gperf \
+    help2man \
+    htop \
+    kmod \
+    libblkid-dev \
+    libc-ares-dev \
+    libcurl4-openssl-dev \
+    libdevmapper-dev \
+    libev-dev \
+    libevent-dev \
+    libgmp3-dev \
+    libkeyutils-dev \
+    libltdl-dev \
+    libmpc-dev \
+    libmpfr-dev \
+    libncurses5-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libtool \
+    libtool-bin \
+    libudev-dev \
+    libxml2-dev \
+    locales \
+    mc \
+    nano \
+    pkg-config \
+    python3 \
+    python3-docutils \
+    texinfo \
+    unzip \
+    uuid \
+    uuid-dev \
+    vim \
+    wget \
+    xxd \
+    zlib1g-dev
 
-WORKDIR "${APP_PATH}"
+RUN locale-gen --no-purge en_US.UTF-8 ru_RU.UTF-8
 
-CMD "${APP_PATH}/${APP_LAUNCHER_NAME}"
+ENV LANG="en_US.UTF-8" \
+    LC_ALL="en_US.UTF-8"
+
+WORKDIR "/opt"
